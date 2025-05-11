@@ -26,7 +26,8 @@ pipeline {
                     sh "docker build -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE} ."
                 }
             }
-            stage('Push Docker Image') {
+        }   
+        stage('Push Docker Image') {
                 steps {
                     script {
                         // Push the Docker image to the registry
@@ -35,8 +36,8 @@ pipeline {
                         sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
                     }
                 }
-            }
-            stage('Deploy and Test Docker Image'){
+        }
+        stage('Deploy and Test Docker Image'){
                 steps{
                     script{
                         echo "Running Docker image locally to verify"
@@ -47,9 +48,9 @@ pipeline {
                         sh "docker ps"
                     }
                 }
-            }
+        }
         } 
-    }
+    // Post actions
     post {
         always {
             echo 'Pipeline execution completed.'
