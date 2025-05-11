@@ -6,7 +6,7 @@ pipeline {
         DOCKER_REGISTRY = "localhost:5000"
         DOCKER_IMAGE = "node-express-app"
         BRANCH = "dev-branch"
-        GIT_URL = "https://github.com/SaminAhsanTausif/node-express-hello-devfile-no-dockerfile"
+        GIT_URL = "https://github.com/SaminAhsanTausif/node-express-hello-devfile-no-dockerfile.git"
     }
     stages {
         stage('Clone Repository') {
