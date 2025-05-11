@@ -7,6 +7,7 @@ pipeline {
         DOCKER_IMAGE = "node-express-app"
         BRANCH = "dev-branch"
         GIT_URL = "https://github.com/SaminAhsanTausif/node-express-hello-devfile-no-dockerfile.git"
+        IMAGE_NAME = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}"  // Combine the registry and image name
     }
     stages {
         stage('Clone Repository') {
@@ -18,7 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('Build and Tage Docker Image') {
+        stage('Build and Tag Docker Image') {
             steps {
                 script {
                     // Build the Docker image
