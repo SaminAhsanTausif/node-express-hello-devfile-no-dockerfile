@@ -7,7 +7,6 @@ pipeline {
         DOCKER_IMAGE = "node-express-app"
         BRANCH = "dev-branch"
         GIT_URL = "https://github.com/SaminAhsanTausif/node-express-hello-devfile-no-dockerfile.git"
-        IMAGE_NAME = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}"  // Combine the registry and image name
     }
     stages {
         stage('Clone Repository') {
@@ -43,9 +42,10 @@ pipeline {
                     script{
                         echo "Running Docker image locally to verify"
                         sh "docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
-                        sh "docker stop ${IMAGE_NAME} || true"
-                        sh "docker rm ${IMAGE_NAME} || true"
-                        sh "docker run -d -p 3000:3000 --name ${IMAGE_NAME} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
+                        def containerName = "node-express-container"
+                        sh "docker stop ${containerName} || true"
+                        sh "docker rm ${containerName} || true"
+                        sh "docker run -d -p 3000:3000 --name ${containerName} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
                         sh "docker ps"
                     }
                 }
