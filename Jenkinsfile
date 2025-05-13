@@ -1,16 +1,13 @@
 pipeline {
     agent any
-    environment
-    {
-        // Define environment variables here
-        CONTAINER_NAME = "node-express-container"
-    }
     parameters {
+        // Define environment variables here
         string(name: 'BRANCH', description: 'Branch to build')
         string(name: 'GIT_URL', description: 'Git repository URL')
         string(name: 'DOCKER_REGISTRY', description: 'Docker registry URL')
         string(name: 'DOCKER_IMAGE', description: 'Docker image name')
-        credentials(name: 'DOCKER_CREDENTIALS', description: 'Credentials for Docker registry')
+        string(name: 'CONTAINER_NAME', description: 'Docker container name')
+        //credentials(name: 'DOCKER_CREDENTIALS', description: 'Credentials for Docker registry')
     }
     stages {
         stage('Clone Repository') {
@@ -46,9 +43,9 @@ pipeline {
                     script{
                         echo "Running Docker image locally to verify"
                         sh "docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
-                        sh "docker stop ${CONTAINER_NAME} || true"
-                        sh "docker rm ${CONTAINER_NAME} || true"
-                        sh "docker run -d -p 3000:3000 --name ${CONTAINER_NAME} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
+                        sh "docker stop ${params.CONTAINER_NAME} || true"
+                        sh "docker rm ${params.CONTAINER_NAME} || true"
+                        sh "docker run -d -p 3000:3000 --name ${params.CONTAINER_NAME} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}"
                         sh "docker ps"
                     }
                 }
